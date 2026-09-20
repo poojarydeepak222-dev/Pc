@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
 set -e
-mkdir -p /tmp/cloudpc
-if pgrep -x Xvfb >/dev/null; then exit 0; fi
-Xvfb :1 -screen 0 1280x800x24 -ac >/tmp/cloudpc/xvfb.log 2>&1 &
 export DISPLAY=:1
+export XDG_RUNTIME_DIR="/tmp/runtime-$(id -u)"
+mkdir -p "$XDG_RUNTIME_DIR"
+chmod 700 "$XDG_RUNTIME_DIR"
+pkill -f "Xvfb :1" 2>/dev/null || true
+pkill -f "x11vnc.*5901" 2>/dev/null || true
+pkill -f "websockify.*6080" 2>/dev/null || true
+Xvfb :1 -screen 0 1366x768x24 -ac +extension GLX +render -noreset >/tmp/cloud-pc-xvfb.log 2>&1 &
 sleep 2
-dbus-launch --exit-with-session startxfce4 >/tmp/cloudpc/xfce.log 2>&1 &
-sleep 4
-x11vnc -display :1 -forever -shared -rfbport 5900 -nopw >/tmp/cloudpc/x11vnc.log 2>&1 &
-websockify --web=/usr/share/novnc/ 6080 localhost:5900 >/tmp/cloudpc/novnc.log 2>&1 &
-echo "Private Cloud PC running on port 6080"
+dbus-launch --exit-with-session startxfce4 >/tmp/cloud-pc-xfce.log 2>&1 &
+sleep 5
+x11vnc -display :1 -rfbport 5901 -forever -shared -nopw >/tmp/cloud-pc-vnc.log 2>&1 &
+websockify --web=/usr/share/novnc/ 6080 localhost:5901 >/tmp/cloud-pc-novnc.log 2>&1 &
+echo "Private Cloud PC started. Open Codespaces port 6080."
