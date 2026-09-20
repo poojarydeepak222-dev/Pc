@@ -1,0 +1,1 @@
+{"name":"My Private Cloud PC","build":{"dockerfile":"Dockerfile"},"forwardPorts":[6080],"portsAttributes":{"6080":{"label":"Private Cloud PC","onAutoForward":"notify","visibility":"private"}},"remoteUser":"vscode","overrideCommand":false,"postCreateCommand":"bash .devcontainer/start-cloud-pc.sh"}
