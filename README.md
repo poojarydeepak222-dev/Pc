@@ -1,17 +1,19 @@
 # My Private Cloud PC
 
-Personal browser-based Linux desktop for use from Android through GitHub Codespaces.
+Your personal browser-based Linux desktop for Android through GitHub Codespaces.
 
 ## Start
-1. Open this repository on GitHub.
-2. Tap **Code → Codespaces → Create codespace on main**.
-3. Wait for the Codespace to finish building.
-4. Open the **Ports** tab.
-5. Open port **6080** in your browser.
+Open a Codespace for this repository, then run:
 
-Keep the port **Private**. Do not change it to Public.
+```bash
+bash .devcontainer/start-cloud-pc.sh
+```
 
-This project uses Ubuntu + XFCE + Xvfb + x11vnc + noVNC. It is intended for one personal user.
+Then open **Ports → 6080 → Open in Browser**.
 
-## Important
-GitHub Codespaces is metered. GitHub currently includes a monthly free quota for personal accounts. Usage beyond the included quota can be billed if payment and spending settings allow it. Configure a $0 spending limit if you want to prevent paid overages.
+The forwarded port is configured as **private**, so it is intended for your authenticated Codespaces access.
+
+## Stop
+Stop the Codespace when finished to avoid using your monthly Codespaces quota.
+
+This project is Linux, not Windows.
